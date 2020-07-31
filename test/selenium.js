@@ -20,10 +20,36 @@ describe("Formulario de login", function () {
 
             //console.log(await firstResult.getAttribute('textContent'));
             assert.equal("Bienvenido, Pablo", await firstResult.getAttribute('textContent'));
-            
+
         }
         finally{
-            driver.quit();
+            await driver.quit();
+        }
+
+    })
+
+
+    it("No inicia sesión con password incorrecta", async function () {
+        this.timeout(15000);
+
+        let driver = await new Builder().forBrowser('chrome').build();
+
+        try {
+            // Navigate to Url
+            await driver.get('http://localhost:3000/login');
+
+            // Introduce email, contraseña y pulsa enter
+            await driver.findElement(By.name('email')).sendKeys('pablosuamu@hotmail.com');
+            await driver.findElement(By.name('password')).sendKeys('asgfgeedgsgsg', Key.ENTER);
+
+            let firstResult = await driver.wait(until.elementLocated(By.css('div.alert.alert-danger')), 10000);
+
+            //console.log(await firstResult.getAttribute('textContent'));
+            assert.ok(firstResult);
+
+        }
+        finally{
+            await driver.quit();
         }
 
     })

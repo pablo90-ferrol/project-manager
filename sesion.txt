@@ -1,0 +1,10 @@
+var cookieParser = require('cookie-parser');
+var cookieSession = require('cookie-session');
+
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(cookieSession({
+  name: 'campurriana',
+  keys: ['g5m86TxvcmtEnMFmDNh4jj&@', 'iVKn&HigkhM616ELT5gbY^Eg'],
+  maxAge: 5 * 60 * 1000
+}));

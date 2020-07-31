@@ -20,6 +20,7 @@ describe("Formulario de login", function () {
 
             //console.log(await firstResult.getAttribute('textContent'));
             assert.equal("Bienvenido, Pablo", await firstResult.getAttribute('textContent'));
+            
         }
         finally{
             driver.quit();

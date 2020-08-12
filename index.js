@@ -2,17 +2,22 @@ require('dotenv').config()
 const express = require('express')
 var cookieSession = require('cookie-session')
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 
 const {login, controlAcceso} = require('./controllers/autenticacion')
 const {dashboard} = require('./controllers/dashboard')
 const {mostrarTarea, registrarAccionTarea} = require('./controllers/tareas')
 const { crearProyecto, listarProyectos, leerProyecto, modificarProyecto, eliminarProyecto } = require('./api/proyectos')
-const { crearTarea } = require('./api/tareas')
+const { crearTarea, listarTareas, leerTarea, modificarTarea, eliminarTarea } = require('./api/tareas')
+const { crearUsuario, listarUsuarios, leerUsuario, modificarUsuario, eliminarUsuario } = require('./api/usuarios')
+const { crearRol, listarRoles, leerRol, modificarRol, eliminarRol } = require('./api/roles')
+
 
 const app = express()
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
+app.use(cors())
 
 app.use(cookieParser())
 app.use(cookieSession({
@@ -45,5 +50,17 @@ app.get('/api/tareas', listarTareas)
 app.get('/api/tareas/:id', leerTarea)
 app.put('/api/tareas/:id', modificarTarea)
 app.delete('/api/tareas/:id', eliminarTarea)
+
+app.post('/api/usuarios', crearUsuario)
+app.get('/api/usuarios', listarUsuarios)
+app.get('/api/usuarios/:id', leerUsuario)
+app.put('/api/usuarios/:id', modificarUsuario)
+app.delete('/api/usuarios/:id', eliminarUsuario)
+
+app.post('/api/roles', crearRol)
+app.get('/api/roles', listarRoles)
+app.get('/api/roles/:id', leerRol)
+app.put('/api/roles/:id', modificarRol)
+app.delete('/api/roles/:id', eliminarRol)
 
 app.listen(3000)
